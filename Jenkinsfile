@@ -1,34 +1,23 @@
 pipeline {
     agent any
-    
+
     stages {
-        stage('Checkout') {
+        stage('Build') { // Etapa de Build
             steps {
-                // Clonando o repositório Git
-                git 'https://github.com/ocarinaa/TestCi.git'
+                echo 'Build iniciado com sucesso!' // Mensagem de build
             }
         }
-        stage('Build') {
+
+        stage('Test') { // Etapa de Testes
             steps {
-                // Comandos para construir o projeto
-                echo 'Construindo o projeto...'
-                // Exemplo de comando para rodar o build (dependendo do seu projeto)
-                sh 'python setup.py install'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Comandos para rodar testes
-                echo 'Executando os testes...'
-                // Exemplo de comando para rodar testes
-                sh 'python -m unittest discover'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploy para produção'
-                // Comando de deploy
+                echo 'Executando testes...' // Mensagem de teste
             }
         }
     }
-}
+
+    post { // Pós-execução
+        success { // Caso o build passe
+            echo 'Pipeline concluído com sucesso!' // Mensagem de sucesso
+        }
+        failure
+
